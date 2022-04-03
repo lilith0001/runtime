@@ -1,31 +1,20 @@
 import numpy as np
-import random
 import time
+import sys
 
-# initialization
-n = 800
-
+n = int(sys.argv[1])
 A = np.reshape(np.array([0] * n**2, dtype = int), (n, n))
 B = np.reshape(np.array([0] * n**2, dtype = int), (n, n))
 C = np.reshape(np.array([0] * n**2, dtype = int), (n, n))
-
-# populate matrices with int values from 0 to 99
 for i in range(n):
     for j in range(n):
-        A[i][j] = random.randint(0, 5)
-                
+        A[i][j] = i + j
+        B[i][j] = i + j
+
+start = time.time_ns()
 for i in range(n):
     for j in range(n):
-        B[i][j] = random.randint(0, 5)
+        C[i][j] = sum(A[i,:] * B[:,j])       
+end = time.time_ns()
 
-#start timer here
-start = time.time() * 1000
-
-#perform matrix multiplication
-for i in range(n):
-    for j in range(n):
-        C[i][j] = sum(A[i,:] * B[:,j])
-        
-end = time.time() * 1000
-
-print(f'{int(end - start)}', 'milliseconds')
+print(f'{int(int(end-start)/1000)}',end='') # µs

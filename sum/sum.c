@@ -1,42 +1,19 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
-
+#include <sys/time.h>
 int main(int argc, char** argv)
 {
-	//srand(time(NULL));
-	struct timeval start, end;
-	
-	long long int lst[10000000];
-	int time;
-	size_t n = sizeof(lst)/sizeof(lst[0]);
+	srand(time(NULL));
+	int n = atoi(argv[1]);
+	long long int lst[n];
 	for(long long int i = 0; i < n; i++)
 		lst[i] = i;
 	long long int sum = 0;
-
-	gettimeofday(&start, NULL);
+    clock_t start, end;
+	start = clock();
 	for(int i = 0; i < n; i++)
 		sum += lst[i];
-    gettimeofday(&end, NULL);
-
-	 printf("time    = %ld milliseconds\n",
-    	(((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)))/1000);
-	
-
-	printf("n %zu\n", n);
-	printf("sum %lld\n", sum);
-	printf("time %d", time);
-    //int millisec = diff * 1000 / CLOCKS_PER_SEC; 
+	end = clock();
+	printf("%d", (int)((end - start) * 1000 * 1000 / CLOCKS_PER_SEC));
+	return 0;
 }
-/*
-int main()
-{
-    int n = 40;
-    int sum;
-
-    sum = fib(n);
-    
-    printf("fib(%d) = %d\n", n, sum);
-   
-    return 0;
-}*/
