@@ -1,4 +1,5 @@
 import time
+import sys
 
 # Bypass Python's internal limit on number of recursive function calls.
 #from functools import lru_cache
@@ -10,15 +11,11 @@ def fibr(n):
     else:
         return fibr(n-1) + fibr(n-2)
 
-n = 40
+n = int(sys.argv[1])
 sum = int()
 
-start = time.time() * 1000
+start = time.time_ns()
 sum = fibr(n)
-end = time.time() * 1000
-delta = int(end - start)
-#delta = time.time() * 1000 - start
+end = time.time_ns()
 
-# Print as required
-print(f"fib({n}) = {sum}")
-print(f"time    = {delta} milliseconds")
+print(f"{int(int((end-start)/1000))}",end='') # µs

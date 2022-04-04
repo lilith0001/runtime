@@ -4,44 +4,37 @@
 
 int main(int argc, char** argv)
 {
-    //initilaization
-    int n = 50000;
+    int n = atoi(argv[1]);
     int A[n];
+    int B[n];
+    for(int i=0; i<n; i++)
+        A[i] = i;
+    int k = 0;
+    for(int i = n - 1; i>=0; i--)
+    {
+        B[k] = A[i];
+        k++;
+    }
     int min, minIndex;
     srand(time(NULL));
 
-
-    // populate matrices with random numbers from 0-99
-    for(int i=0; i<n; i++)
-        A[i] = rand() % 100;     
-
-    
-    //start timer
-    clock_t start = clock(), diff;
-
-    //sort
+    clock_t start, end;
+    start = clock();
     for(int i=0; i<n; i++)
     {
-        min = A[i];
+        min = B[i];
         minIndex = i;
         for(int j=i+1; j<n; j++)
-        {
-            if(A[j] < min)
+            if(B[j] < min)
             {
-                min = A[j];
+                min = B[j];
                 minIndex = j;
-            }		
-        }
-        
-        //swap
+            }
         int temp = A[i];
-        A[i] = min;
-        A[minIndex] = temp;	
+        B[i] = min;
+        B[minIndex] = temp;	
     }
-
-    diff = clock() - start;
-    int millisec = diff * 1000 / CLOCKS_PER_SEC; 
-    printf("%d milliseconds\n", millisec);
-
-    return 0;
+    end = clock();
+	printf("%d\n", (int)((end - start) * 1000 * 1000 / CLOCKS_PER_SEC));
+    return B[n];
 }

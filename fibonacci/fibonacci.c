@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <sys/time.h>
 
@@ -9,19 +10,16 @@ int fib(int n)
         return fib(n-1) + fib(n-2);
 }
 
-int main()
+int main(int argc, char** argv)
 {
-    struct timeval start, stop;
-    int n = 40;
+    srand(time(NULL));
+    int n = atoi(argv[1]);
     int sum;
-
-    gettimeofday(&start, NULL);
-    sum = fib(n);
-    gettimeofday(&stop, NULL);
+    clock_t start, end;
     
-    printf("fib(%d) = %d\n", n, sum);
-    printf("time    = %ld milliseconds\n",
-    (((stop.tv_sec * 1000000 + stop.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)))/1000);
-
-    return 0;
+    start = clock();
+    sum = fib(n);
+    end = clock();
+    printf("%d\n", (int)((end - start) * 1000 * 1000 / CLOCKS_PER_SEC));
+    return sum;
 }

@@ -21,6 +21,6 @@ class MatrixMult
 					C[i][j] += A[i][k]*B[k][j];
 		endTime = System.nanoTime();
 		
-        System.out.println((long)((endTime - startTime) / 1000));
+        System.out.println((long)((endTime - startTime) / 1000)); // µs
     }
 }

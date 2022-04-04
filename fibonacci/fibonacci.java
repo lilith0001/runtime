@@ -1,15 +1,15 @@
 class fibonacci {
     public static void main(String[] args)
     {
-        int n = 40;
-	int sum;
+        int n = Integer.valueOf(args[0]);
+        int sum;
 
-	final long startTime = System.currentTimeMillis();
-        sum = fib(n);
-	final long endTime = System.currentTimeMillis();
-        
-        System.out.println("fib(" + n + ") = " + sum);
-	System.out.println("time    = " + (endTime - startTime) + " milliseconds");
+        final long startTime, endTime;
+        startTime = System.nanoTime();
+            sum = fib(n);
+        endTime = System.nanoTime();
+            
+		System.out.println((int)((endTime - startTime) / 1000));
     }
     
     static int fib(int n)

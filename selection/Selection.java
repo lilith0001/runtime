@@ -1,40 +1,38 @@
-import java.util.Random;
-
 class Selection
 {
 	public static void main(String[] args)
 	{
-		Random rand = new Random();	
-		int n = 50000;
+		int n = Integer.valueOf(args[0]);
 		int[] A = new int[n];	
-		
-		// populate array with random integers
+		int[] B = new int[n];
 		for(int i=0; i<n; i++)
-			A[i] = rand.nextInt(99);
-		
+			A[i] = i;
+		int k = 0;
+		for (int i = n - 1; i >= 0; i--)
+		{
+			B[k] = A[i];
+			k++;
+		}
 		int minIndex;
 		int min;
-		
-		final long startTime = System.currentTimeMillis();
+		final long startTime, endTime;
+
+		startTime = System.nanoTime();
 		for(int i=0; i<n; i++)
 		{
-			min = A[i];
+			min = B[i];
 			minIndex = i;
 			for(int j=i+1; j<n; j++)
-			{
-				if(A[j] < min)
+				if(B[j] < min)
 				{
-					min = A[j];
+					min = B[j];
 					minIndex = j;
-				}		
-			}
-			
-			//swap
-			int temp = A[i];
-			A[i] = min;
-			A[minIndex] = temp;	
+				}
+			int temp = B[i];
+			B[i] = min;
+			B[minIndex] = temp;	
 		}
-		final long endTime = System.currentTimeMillis();
-		System.out.println((endTime - startTime) + " milliseconds");
+		endTime = System.nanoTime();
+		System.out.println((long)((endTime - startTime) / 1000)); // µs
 	}
 }

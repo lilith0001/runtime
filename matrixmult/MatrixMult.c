@@ -24,7 +24,7 @@ int main(int argc, char** argv)
             for(int j=0; j<n; j++)
                 C[i][j] += A[i][k]*B[k][j];
     end = clock();
-    printf("%d", (int)((end - start) * 1000 * 1000 / CLOCKS_PER_SEC));
-    return 0;
+    printf("%d\n", (int)((end - start) * 1000 * 1000 / CLOCKS_PER_SEC));
+    return C[n][n];
 }
 

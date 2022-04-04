@@ -1,32 +1,31 @@
-import random
 import time
+import sys
 
-# initialization
-n = 50000
+n = int(sys.argv[1])
 A = [0]*n
-
+B = [0]*n
 min = None
 min_index = None
 
-# populate array with random integers
-for i in range(len(A)):
-	A[i] = random.randint(0, 99)
-	
-start = time.time() * 1000
-
-# sort
+# populating array in reverse sorted order
 for i in range(n):
-    min = A[i]
+	A[i] = i
+k = 0
+for i in reversed(A):
+    B[k] = A[i]
+    k += 1
+
+start = time.time_ns()
+for i in range(n):
+    min = B[i]
     min_index = i
     for j in range(i+1, n):
-        if A[j] < min:
-            min = A[j]
+        if B[j] < min:
+            min = B[j]
             min_index = j
-    
-    # swap
-    temp = A[i]
-    A[i] = min
-    A[min_index] = temp;	
+    temp = B[i]
+    B[i] = min
+    B[min_index] = temp;	
+end = time.time_ns()
 
-end = time.time() * 1000
-print(f'{int(end - start)}', 'milliseconds')
+print(f'{int((end - start)/1000)}') # µs
