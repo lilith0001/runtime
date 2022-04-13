@@ -1,30 +1,58 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+
 int main(int argc, char** argv)
 {
     int n = atoi(argv[1]);
-    int A[n][n];
-    int B[n][n];
-    int C[n][n];
-    srand(time(NULL));
-    for(int i=0; i<n; i++)
-            for(int j=0; j<n; j++)
-            {
-                A[i][j] = i + j;
-                B[i][j] = i + j;
-            }
-    for(int i=0; i<n; i++)
-        for(int j=0; j<n; j++)
-            C[i][j] = 0;
-    clock_t start, end;
-    start = clock();
-    for(int i=0; i<n; i++)
-        for(int k=0; k<n; k++)
-            for(int j=0; j<n; j++)
-                C[i][j] += A[i][k]*B[k][j];
-    end = clock();
-    printf("%d\n", (int)((end - start) * 1000 * 1000 / CLOCKS_PER_SEC));
-    return C[n][n];
-}
 
+    /* Allocate matrices A and B */
+    int *A = malloc(n * n * sizeof(int));
+    int *B = malloc(n * n * sizeof(int));
+
+    /* Allocceate result matrix C and initialize it with zeros */
+    int *C = calloc(n * n, sizeof(int));
+
+    /* Fill matrices A and B */
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            A[i * n + j] = i + j;
+            B[i * n + j] = i + j;
+        }
+    }
+
+    clock_t start, end;
+
+    start = clock(); /* Start timer */
+
+    /* Transpose B */
+    int *tB = malloc(n * n * sizeof(int));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            tB[i * n + j] = B[j * n + i];
+
+    /* Multiply A and tB (transposed B) */
+    int sum = 0;
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            sum = 0;
+            for(int k=0; k<n; k++) {
+                sum += A[i * n + k] * tB[j * n + k];
+            }
+            C[i * n + j] += sum;
+        }
+    }
+
+    end = clock(); /* Stop timer */
+
+    /* Free matrices */
+    free(A);
+    free(B);
+    free(tB);
+    free(C);
+
+    /* Print execution time in microseconds */
+    printf("%d\n", (int)((end - start) * 1000 * 1000 / CLOCKS_PER_SEC));
+
+    return 0;
+}
