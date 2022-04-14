@@ -2,21 +2,21 @@ class fibonacci {
     public static void main(String[] args)
     {
         int n = Integer.valueOf(args[0]);
-        int sum;
 
         final long startTime, endTime;
         startTime = System.nanoTime();
-            sum = fib(n);
+
+        // Get n-th Fibonacci number
+        long a = 0, b = 1, tmp;
+        for (int i = 0; i < n - 1; i++) {
+            tmp = a;
+            a = b;
+            b = tmp + b;
+        }
+
         endTime = System.nanoTime();
-            
-		System.out.println((int)((endTime - startTime) / 1000));
-    }
-    
-    static int fib(int n)
-    {
-        if (n < 3)
-            return 1;
-        else
-            return fib(n-1) + fib(n-2);
+
+        // Print execution time in microseconds
+        System.out.println((int)((endTime - startTime) / 1000));
     }
 }
