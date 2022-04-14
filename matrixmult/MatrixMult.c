@@ -6,12 +6,10 @@ int main(int argc, char** argv)
 {
     int n = atoi(argv[1]);
 
-    /* Allocate matrices A and B */
+    /* Allocate matrices A, B and C */
     int *A = malloc(n * n * sizeof(int));
     int *B = malloc(n * n * sizeof(int));
-
-    /* Allocceate result matrix C and initialize it with zeros */
-    int *C = calloc(n * n, sizeof(int));
+    int *C = malloc(n * n * sizeof(int));
 
     /* Fill matrices A and B */
     for(int i=0; i<n; i++) {
@@ -23,7 +21,7 @@ int main(int argc, char** argv)
 
     clock_t start, end;
 
-    start = clock(); /* Start timer */
+    start = clock();
 
     /* Transpose B */
     int *tB = malloc(n * n * sizeof(int));
@@ -39,11 +37,11 @@ int main(int argc, char** argv)
             for(int k=0; k<n; k++) {
                 sum += A[i * n + k] * tB[j * n + k];
             }
-            C[i * n + j] += sum;
+            C[i * n + j] = sum;
         }
     }
 
-    end = clock(); /* Stop timer */
+    end = clock();
 
     /* Free matrices */
     free(A);
